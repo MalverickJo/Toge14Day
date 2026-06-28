@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4e9f0b9ff742345a931ce210ef0946, type: 3}
+  m_Name: MercMage
+  m_EditorClassIdentifier: Assembly-CSharp::MercenaryData
+  mercenaryName: Ian (Elven Mage)
+  recruitDialog: Hm ? im Ian. Need ingreeedientss. waduyuwan ?
+  role: {fileID: 11400000, guid: 9feb3813b06d972449278083fe9e8b66, type: 2}
+  overworldPrefab: {fileID: 1880616072713439741, guid: b1d1b587ef04c4b78accd9412b85b135, type: 3}
+  hireCost: 200

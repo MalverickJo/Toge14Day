@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7847cabb3b25c34469930023b92a4196, type: 3}
+  m_Name: Knight
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterRoleData
+  role: 0
+  roleName: Knight
+  description: 
+  maxHP: 120
+  maxMP: 60
+  attack: 15
+  defense: 25
+  magicAttack: 0
+  magicDefense: 20
+  speed: 80
+  skills:
+  - {fileID: 11400000, guid: 59218c78b904cff438d4d933af12a431, type: 2}
+  - {fileID: 11400000, guid: 971c4cde56be3d74aa8cb594bea86b81, type: 2}
+  characterPrefab: {fileID: 7715552558439874258, guid: 0f2e860a0377f4a9f98fa39bbafb5dad, type: 3}
+  animator: {fileID: 9100000, guid: e9358c226bb09e24da9c5f7064768810, type: 2}
+  hpGrowth: 15
+  mpGrowth: 3
+  attackGrowth: 2
+  defenseGrowth: 4
+  magicAttackGrowth: 0
+  magicDefenseGrowth: 3
+  speedGrowth: 1

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7847cabb3b25c34469930023b92a4196, type: 3}
+  m_Name: Archer
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterRoleData
+  role: 1
+  roleName: Archer
+  description: 
+  maxHP: 80
+  maxMP: 70
+  attack: 22
+  defense: 10
+  magicAttack: 0
+  magicDefense: 8
+  speed: 120
+  skills:
+  - {fileID: 11400000, guid: 834968a9dc66a734e86133ccbaea9873, type: 2}
+  - {fileID: 11400000, guid: df1434875361262429e7c7e5b85b562c, type: 2}
+  characterPrefab: {fileID: 6311861856165175232, guid: 22278203e8d524358894260c10cb0a79, type: 3}
+  animator: {fileID: 9100000, guid: e9358c226bb09e24da9c5f7064768810, type: 2}
+  hpGrowth: 10
+  mpGrowth: 5
+  attackGrowth: 4
+  defenseGrowth: 2
+  magicAttackGrowth: 0
+  magicDefenseGrowth: 1
+  speedGrowth: 2

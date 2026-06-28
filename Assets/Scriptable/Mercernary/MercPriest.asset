@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4e9f0b9ff742345a931ce210ef0946, type: 3}
+  m_Name: MercPriest
+  m_EditorClassIdentifier: Assembly-CSharp::MercenaryData
+  mercenaryName: Lily (Priest)
+  recruitDialog: O'mother give me strenght in every walk I walked. Hello there do
+    you want me to pray for you ?
+  role: {fileID: 11400000, guid: 59fed4bcd01578444820379079d6adde, type: 2}
+  overworldPrefab: {fileID: 8738902458370966635, guid: 672092d6fae854c9da73ae8124fb85bc, type: 3}
+  hireCost: 200

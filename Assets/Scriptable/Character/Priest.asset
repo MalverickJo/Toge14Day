@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7847cabb3b25c34469930023b92a4196, type: 3}
+  m_Name: Priest
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterRoleData
+  role: 4
+  roleName: Priest
+  description: 
+  maxHP: 85
+  maxMP: 110
+  attack: 8
+  defense: 12
+  magicAttack: 20
+  magicDefense: 18
+  speed: 90
+  skills:
+  - {fileID: 11400000, guid: f005de6681c4423469d197f85cf09924, type: 2}
+  - {fileID: 11400000, guid: 03b45b81fac00b54a9387a9f7fd3373e, type: 2}
+  characterPrefab: {fileID: 8215520666455406396, guid: 29312a108de6b4f4c9e99c061396c0cb, type: 3}
+  animator: {fileID: 9100000, guid: e9358c226bb09e24da9c5f7064768810, type: 2}
+  hpGrowth: 10
+  mpGrowth: 8
+  attackGrowth: 1
+  defenseGrowth: 2
+  magicAttackGrowth: 4
+  magicDefenseGrowth: 4
+  speedGrowth: 1
