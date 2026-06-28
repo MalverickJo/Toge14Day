@@ -114,9 +114,10 @@ public class BattleManager : MonoBehaviour
         target.TakeDamage(damage);
 
         currentUnit.characterRef?.SetAttackAnimation();
-
         battleUI.ShowDamageText(target.gameObject, damage);
         battleUI.UpdateAllHPBars(allUnits);
+
+        CameraShake.Instance?.Shake(0.2f, 0.1f);
 
         StartCoroutine(EndPlayerTurn());
     }
@@ -250,6 +251,7 @@ public class BattleManager : MonoBehaviour
             {
                 t.TakeDamage(damage);
                 battleUI.ShowDamageText(t.gameObject, damage);
+                CameraShake.Instance?.Shake(0.15f, 0.08f);
             }
         }
         else
@@ -257,6 +259,7 @@ public class BattleManager : MonoBehaviour
             int damage = Mathf.RoundToInt(currentUnit.attack * 1.0f);
             target.TakeDamage(damage);
             battleUI.ShowDamageText(target.gameObject, damage);
+            CameraShake.Instance?.Shake(0.15f, 0.08f);
         }
 
         battleUI.UpdateAllHPBars(allUnits);

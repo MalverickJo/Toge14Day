@@ -68,6 +68,9 @@ public class BattleUnit
 
         if (characterRef != null) characterRef.TakeDamageRaw(finalDamage);
         if (enemyRef != null) enemyRef.TakeDamageRaw(finalDamage);
+
+        CameraShake.Instance?.Shake(0.15f, 0.08f);
+
         if (isDead)
             BattleManager.Instance.OnUnitDied(this);
     }
