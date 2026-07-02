@@ -16,8 +16,9 @@ MonoBehaviour:
   description: 
   skillType: 0
   targetType: 0
-  manaCost: 0
+  manaCost: 10
   attackScaling: 1.1
   magicScaling: 0
   effects: []
   icon: {fileID: 0}
+  cooldown: 2

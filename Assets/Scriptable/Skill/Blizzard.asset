@@ -15,6 +15,7 @@ MonoBehaviour:
   skillName: Blizzard
   description: Mengirimkan badai es ke 2 musuh, membekukan mereka.
   skillType: 0
+  skillSound: {fileID: 8300000, guid: 1d74880bed4586644a16a79a2d9dc8af, type: 3}
   targetType: 1
   manaCost: 30
   attackScaling: 0
@@ -25,4 +26,5 @@ MonoBehaviour:
     value: 30
     duration: 2
     statTarget: Speed
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 6f98b3e70c3ad8a48a0396785dad48e8, type: 3}
+  cooldown: 2

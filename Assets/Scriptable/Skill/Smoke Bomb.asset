@@ -15,6 +15,7 @@ MonoBehaviour:
   skillName: Smoke Bomb
   description: Melempar bom asap yang memperlambat semua musuh.
   skillType: 3
+  skillSound: {fileID: 8300000, guid: f11db4559b3ffff45b62e9327fc5535d, type: 3}
   targetType: 3
   manaCost: 20
   attackScaling: 0
@@ -25,4 +26,5 @@ MonoBehaviour:
     value: 25
     duration: 2
     statTarget: Speed
-  icon: {fileID: 3024073001053557778, guid: 0532cd4191cc85745a304e57c4579a7a, type: 3}
+  icon: {fileID: 21300000, guid: eed44235dcbd621438f7c0c4f05e2356, type: 3}
+  cooldown: 3

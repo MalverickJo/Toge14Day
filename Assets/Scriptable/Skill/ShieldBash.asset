@@ -15,6 +15,7 @@ MonoBehaviour:
   skillName: Shield Bash
   description: Memukul musuh dengan perisai dan memaksanya menyerang Knight.
   skillType: 0
+  skillSound: {fileID: 8300000, guid: d1afd3f4d23c24f418ffc315afb04965, type: 3}
   targetType: 0
   manaCost: 20
   attackScaling: 1.2
@@ -25,4 +26,5 @@ MonoBehaviour:
     value: 0
     duration: 1
     statTarget: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a42b3b2bb82524b4c9e97aca1cb294fe, type: 3}
+  cooldown: 2

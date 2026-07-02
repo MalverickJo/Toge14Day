@@ -1,7 +1,5 @@
 using UnityEngine;
 
-using UnityEngine;
-
 public class BattleUnit
 {
     public string unitName;
@@ -20,6 +18,8 @@ public class BattleUnit
     public Character characterRef;
     public Enemy enemyRef;
     public GameObject gameObject;
+
+    public SkillCooldownTracker cooldownTracker = new SkillCooldownTracker();
 
     public static BattleUnit FromCharacter(Character c, GameObject go)
     {
@@ -49,7 +49,7 @@ public class BattleUnit
             currentHP = e.currentHP,
             maxHP = e.GetMaxHP(),
             currentMP = e.currentMP,
-            maxMP = e.RoleData.maxMP,
+            maxMP = e.GetMaxMP(),
             attack = e.GetAttack(),
             defense = e.GetDefense(),
             magicAttack = e.GetMagicAttack(),
@@ -78,5 +78,13 @@ public class BattleUnit
     public void Heal(int amount)
     {
         currentHP = Mathf.Min(maxHP, currentHP + amount);
+    }
+
+    public void RegenMPPercent(float percent)
+    {
+        int amount = Mathf.RoundToInt(maxMP * percent);
+        currentMP = Mathf.Min(maxMP, currentMP + amount);
+        if (characterRef != null) characterRef.RegenMP(amount);
+        if (enemyRef != null) enemyRef.RegenMP(amount);
     }
 }

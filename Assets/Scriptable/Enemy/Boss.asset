@@ -16,6 +16,8 @@ MonoBehaviour:
   enemyName: Boss
   description: 
   enemyLevel: 20
+  attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
+  deathSound: {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
   maxHP: 500
   maxMP: 150
   attack: 35
@@ -35,4 +37,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c2a98e3fd1330914189e558b6345cec9, type: 2}
   expReward: 1000
   goldReward: 200
-  enemyPrefab: {fileID: 7233308530154401741, guid: 3aabd435546394bd292bfe681b4eff9d, type: 3}
+  enemyPrefab: {fileID: 7233308530154401741, guid: 3aabd435546394bd292bfe681b4eff9d,
+    type: 3}

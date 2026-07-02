@@ -21,6 +21,15 @@ public class CharacterRoleData : ScriptableObject
     [Header("Skills")]
     public List<SkillData> skills = new List<SkillData>();
 
+    [Header("Audio")]
+    public AudioClip attackSound;
+    public AudioClip deathSound;
+
+    [Header("Mana Regen")]
+    [Range(0f, 1f)]
+    [Tooltip("Persentase regen MP per turn (0.1 = 10% dari max MP)")]
+    public float mpRegenPercent = 0.1f;
+
     [Header("Visual (Prefab)")]
     public GameObject characterPrefab;
 

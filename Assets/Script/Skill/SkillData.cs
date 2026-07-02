@@ -58,6 +58,9 @@ public class SkillData : ScriptableObject
 
     public SkillType skillType;
 
+    [Header("Audio")]
+    public AudioClip skillSound;
+
     [Header("Targeting")]
     public TargetType targetType;
 
@@ -78,5 +81,8 @@ public class SkillData : ScriptableObject
 
     [Header("Visual")]
     public Sprite icon;
+
+    [Header("Cooldown")]
+    public int cooldown = 0;
 
 }

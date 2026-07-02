@@ -16,6 +16,8 @@ MonoBehaviour:
   enemyName: Rogue
   description: 
   enemyLevel: 1
+  attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
+  deathSound: {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
   maxHP: 60
   maxMP: 50
   attack: 20
@@ -34,4 +36,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8cfa1c9a1d223ee438a8b32a9c76edfa, type: 2}
   expReward: 150
   goldReward: 40
-  enemyPrefab: {fileID: 4847838609770726236, guid: 40d7a418130ef4dfc963730368bc74ad, type: 3}
+  enemyPrefab: {fileID: 4847838609770726236, guid: 40d7a418130ef4dfc963730368bc74ad,
+    type: 3}

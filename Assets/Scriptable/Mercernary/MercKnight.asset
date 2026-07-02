@@ -16,5 +16,6 @@ MonoBehaviour:
   recruitDialog: Im Axel from The Aspen Knight currently i got mission to increase
     my experience in solo adventure. Need Help ?
   role: {fileID: 11400000, guid: 1d510c50a2f101245a6dc25bbc35da9c, type: 2}
-  overworldPrefab: {fileID: 1354516506673247624, guid: 363f4ea61d089418baa625dcea51b38f, type: 3}
+  overworldPrefab: {fileID: 1354516506673247624, guid: 363f4ea61d089418baa625dcea51b38f,
+    type: 3}
   hireCost: 200

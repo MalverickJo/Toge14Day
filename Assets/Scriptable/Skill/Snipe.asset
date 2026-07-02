@@ -15,6 +15,7 @@ MonoBehaviour:
   skillName: Snipe
   description: Menembak satu musuh dengan presisi tinggi, damage besar.
   skillType: 0
+  skillSound: {fileID: 8300000, guid: 1eb7cbaf61d23a64bbd36c0a38b5cb0c, type: 3}
   targetType: 0
   manaCost: 20
   attackScaling: 2
@@ -24,4 +25,6 @@ MonoBehaviour:
     chanceToApply: 100
     value: 100
     duration: 0
-  icon: {fileID: 0}
+    statTarget: 
+  icon: {fileID: 21300000, guid: 37de44bcb59b8174497def1957cc490b, type: 3}
+  cooldown: 2

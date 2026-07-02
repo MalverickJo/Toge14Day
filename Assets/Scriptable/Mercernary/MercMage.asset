@@ -15,5 +15,6 @@ MonoBehaviour:
   mercenaryName: Ian (Elven Mage)
   recruitDialog: Hm ? im Ian. Need ingreeedientss. waduyuwan ?
   role: {fileID: 11400000, guid: 9feb3813b06d972449278083fe9e8b66, type: 2}
-  overworldPrefab: {fileID: 1880616072713439741, guid: b1d1b587ef04c4b78accd9412b85b135, type: 3}
-  hireCost: 200
+  overworldPrefab: {fileID: 1880616072713439741, guid: b1d1b587ef04c4b78accd9412b85b135,
+    type: 3}
+  hireCost: 500

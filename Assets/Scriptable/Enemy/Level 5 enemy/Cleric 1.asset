@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f24e33b587f445f40946c3a1a3023d06, type: 3}
+  m_Name: Cleric 1
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  role: 3
+  enemyName: Cleric
+  description: 
+  enemyLevel: 5
+  attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
+  deathSound: {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
+  maxHP: 70
+  maxMP: 90
+  attack: 6
+  defense: 7
+  magicAttack: 14
+  magicDefense: 14
+  speed: 75
+  hpGrowth: 8
+  mpGrowth: 8
+  attackGrowth: 1
+  defenseGrowth: 2
+  magicAttackGrowth: 3
+  magicDefenseGrowth: 3
+  speedGrowth: 1
+  skills:
+  - {fileID: 11400000, guid: aa4c38a50eec0f74991420ac86d58944, type: 2}
+  expReward: 120
+  goldReward: 30
+  enemyPrefab: {fileID: 2026461799492179603, guid: cdf58f088f9ff419b85fa0917cdf4bf8,
+    type: 3}

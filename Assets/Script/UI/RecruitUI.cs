@@ -35,17 +35,17 @@ public class RecruitUI : MonoBehaviour
 
         nameText.text = data.mercenaryName;
         dialogText.text = data.recruitDialog;
-        costText.text = $"Biaya: {data.hireCost} Gold";
-        goldText.text = $"Gold kamu: {PartyData.Instance.gold}";
+        costText.text = $"Cost: {data.hireCost} Gold";
+        goldText.text = $"Your gold: {PartyData.Instance.gold}";
 
         bool partyFull = PartyData.Instance.partyMembers.Count >= 4;
         bool notEnoughGold = PartyData.Instance.gold < data.hireCost;
 
         recruitButton.interactable = !partyFull && !notEnoughGold;
         if (partyFull)
-            costText.text = "Party sudah penuh! (Max 3 mercenary)";
+            costText.text = "Party is full! (Max 3 mercenaries)";
         else if (notEnoughGold)
-            costText.text = $"Gold tidak cukup! Butuh: {data.hireCost}";
+            costText.text = $"Not enough gold! Need: {data.hireCost}";
 
         panel.SetActive(true);
         Time.timeScale = 0f;

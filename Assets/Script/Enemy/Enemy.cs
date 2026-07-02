@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
     {
         enemyData = data;
         currentHP = GetMaxHP();
-        currentMP = data.maxMP;
+        currentMP = GetMaxMP();
         activeEffects.Clear();
     }
 
@@ -57,8 +57,22 @@ public class Enemy : MonoBehaviour
     public void TakeDamageRaw(int damage)
     {
         currentHP = Mathf.Max(0, currentHP - damage);
-        
+
     }
+
+    public bool SpendMP(int amount)
+    {
+        if (currentMP < amount) return false;
+        currentMP -= amount;
+        return true;
+    }
+
+    public void RegenMP(int amount)
+    {
+        currentMP = Mathf.Min(GetMaxMP(), currentMP + amount);
+    }
+
+    public int GetMaxMP() => enemyData.maxMP + (enemyData.mpGrowth * (enemyData.enemyLevel - 1));
 
     public void ApplyEffect(SkillEffect effect)
     {
@@ -95,7 +109,11 @@ public class Enemy : MonoBehaviour
     public SkillData GetRandomSkill()
     {
         if (enemyData.skills == null || enemyData.skills.Count == 0) return null;
-        return enemyData.skills[Random.Range(0, enemyData.skills.Count)];
+
+        List<SkillData> affordable = enemyData.skills.FindAll(s => s.manaCost <= currentMP);
+        if (affordable.Count == 0) return null;
+
+        return affordable[Random.Range(0, affordable.Count)];
     }
 
     public bool HasTaunt() => activeEffects.Exists(e => e.effectType == EffectType.ApplyTaunt);

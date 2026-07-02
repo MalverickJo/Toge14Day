@@ -10,7 +10,6 @@ public class BattleUI : MonoBehaviour
     public GameObject actionPanel;
     public Button attackButton;
     public Button skillButton;
-    public Button itemButton;
 
     [Header("Skill Panel")]
     public GameObject skillPanel;
@@ -46,10 +45,11 @@ public class BattleUI : MonoBehaviour
 
     private void Start()
     {
-        attackButton.onClick.AddListener(OnAttackButton);
-        skillButton.onClick.AddListener(OnSkillButton);
+        attackButton.onClick.AddListener(() => { AudioManager.Instance?.PlayButtonClick(); OnAttackButton(); });
+        skillButton.onClick.AddListener(() => { AudioManager.Instance?.PlayButtonClick(); OnSkillButton(); });
         if (backButton != null)
             backButton.onClick.AddListener(() => {
+                AudioManager.Instance?.PlayButtonClick();
                 skillPanel.SetActive(false);
                 actionPanel.SetActive(true);
             });
@@ -84,7 +84,6 @@ public class BattleUI : MonoBehaviour
 
         attackButton.interactable = true;
         skillButton.interactable = true;
-        itemButton.interactable = true;
     }
 
     public void HidePlayerActions()
@@ -93,20 +92,17 @@ public class BattleUI : MonoBehaviour
 
         attackButton.interactable = false;
         skillButton.interactable = false;
-        itemButton.interactable = false;
     }   
 
     void OnAttackButton()
     { 
         attackButton.interactable = false;
         skillButton.interactable = false;
-        itemButton.interactable = false;
 
         SelectTarget(true, target =>
         {
             attackButton.interactable = true;
             skillButton.interactable = true;
-            itemButton.interactable = true;
 
             BattleManager.Instance.PlayerAttack(target);
         });
@@ -126,11 +122,16 @@ public class BattleUI : MonoBehaviour
                 skillButtons[i].gameObject.SetActive(true);
 
                 bool canAfford = currentUnit.currentMP >= skills[idx].manaCost;
+                bool isReady = currentUnit.cooldownTracker.IsReady(skills[idx]);
+                int cdRemaining = currentUnit.cooldownTracker.GetCooldown(skills[idx]);
 
-                skillButtons[i].button.interactable = canAfford;
+                skillButtons[i].button.interactable = canAfford && isReady;
 
                 if (skillButtons[i].skillNameText != null)
-                    skillButtons[i].skillNameText.text = $"{skills[idx].skillName}\n(MP:{skills[idx].manaCost})";
+                {
+                    string cdText = !isReady ? $" (CD:{cdRemaining})" : "";
+                    skillButtons[i].skillNameText.text = $"{skills[idx].skillName}\n(MP:{skills[idx].manaCost}){cdText}";
+                }
 
                 if (skillButtons[i].descriptionText != null)
                     skillButtons[i].descriptionText.text = skills[idx].description;
@@ -139,13 +140,17 @@ public class BattleUI : MonoBehaviour
                     skillButtons[i].iconImage.sprite = skills[idx].icon;
 
                 skillButtons[i].button.onClick.RemoveAllListeners();
-                skillButtons[i].button.onClick.AddListener(() => OnSkillSelected(skills[idx]));
+                skillButtons[i].button.onClick.AddListener(() => {
+                    AudioManager.Instance?.PlayButtonClick();
+                    OnSkillSelected(skills[idx]);
+                });
             }
             else
             {
                 skillButtons[i].gameObject.SetActive(false);
             }
         }
+            
     }
 
     void OnSkillSelected(SkillData skill)

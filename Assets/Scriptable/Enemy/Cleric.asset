@@ -16,6 +16,8 @@ MonoBehaviour:
   enemyName: Cleric
   description: 
   enemyLevel: 1
+  attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
+  deathSound: {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
   maxHP: 70
   maxMP: 90
   attack: 6
@@ -34,4 +36,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aa4c38a50eec0f74991420ac86d58944, type: 2}
   expReward: 120
   goldReward: 30
-  enemyPrefab: {fileID: 2026461799492179603, guid: cdf58f088f9ff419b85fa0917cdf4bf8, type: 3}
+  enemyPrefab: {fileID: 2026461799492179603, guid: cdf58f088f9ff419b85fa0917cdf4bf8,
+    type: 3}

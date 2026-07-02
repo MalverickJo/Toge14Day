@@ -16,6 +16,8 @@ MonoBehaviour:
   enemyName: Warrior
   description: 
   enemyLevel: 1
+  attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
+  deathSound: {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
   maxHP: 80
   maxMP: 30
   attack: 12
@@ -34,4 +36,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d59e35c588e8e1240a73d8e3e619c65f, type: 2}
   expReward: 50
   goldReward: 20
-  enemyPrefab: {fileID: 8717663361120014766, guid: 64359be8b124840d0bb4846426882691, type: 3}
+  enemyPrefab: {fileID: 8717663361120014766, guid: 64359be8b124840d0bb4846426882691,
+    type: 3}

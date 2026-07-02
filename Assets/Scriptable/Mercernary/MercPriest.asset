@@ -16,5 +16,6 @@ MonoBehaviour:
   recruitDialog: O'mother give me strenght in every walk I walked. Hello there do
     you want me to pray for you ?
   role: {fileID: 11400000, guid: 59fed4bcd01578444820379079d6adde, type: 2}
-  overworldPrefab: {fileID: 8738902458370966635, guid: 672092d6fae854c9da73ae8124fb85bc, type: 3}
-  hireCost: 200
+  overworldPrefab: {fileID: 8738902458370966635, guid: 672092d6fae854c9da73ae8124fb85bc,
+    type: 3}
+  hireCost: 500

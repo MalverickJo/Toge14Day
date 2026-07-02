@@ -15,5 +15,6 @@ MonoBehaviour:
   mercenaryName: Exa (Rogue)
   recruitDialog: Hellloooo im Exa the Dark Elf rogue. Need someone to kill ?
   role: {fileID: 11400000, guid: d2c5e2c3883b2f54898195b520e861b0, type: 2}
-  overworldPrefab: {fileID: 6871854670009154279, guid: ddbf09db7bc774cabb5d46e3a3a70730, type: 3}
-  hireCost: 200
+  overworldPrefab: {fileID: 6871854670009154279, guid: ddbf09db7bc774cabb5d46e3a3a70730,
+    type: 3}
+  hireCost: 250

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerSpawner : MonoBehaviour
@@ -32,30 +33,35 @@ public class PlayerSpawner : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name != "Game") return;
 
+        AudioManager.Instance?.PlayOverworldMusic();
+
         Debug.Log($"OnSceneLoaded - Game scene");
         Debug.Log($"PartyData count: {PartyData.Instance?.partyMembers?.Count}");
 
-        if (BattleData.Instance != null && BattleData.Instance.defeatedEnemyPosition != Vector3.zero)
+        partyObjects.Clear();
+        overridePrefabs.Clear();
+        leader = null;
+
+        if (BattleData.Instance != null && !string.IsNullOrEmpty(BattleData.Instance.currentEnemyId))
         {
+            string defeatedId = BattleData.Instance.currentEnemyId;
             EnemyEncounter[] encounters = FindObjectsByType<EnemyEncounter>(FindObjectsSortMode.None);
             foreach (var enc in encounters)
             {
-                if (Vector3.Distance(enc.transform.position, BattleData.Instance.defeatedEnemyPosition) < 1f)
+                if (enc.enemyId == defeatedId)
                 {
                     Destroy(enc.gameObject);
                     break;
                 }
             }
-            BattleData.Instance.defeatedEnemyPosition = Vector3.zero;
+            DefeatedEnemyTracker.MarkDefeated(defeatedId);
+            BattleData.Instance.currentEnemyId = "";
         }
-
-        partyObjects.Clear();
-        overridePrefabs.Clear();
-        leader = null;
 
         Vector3 spawnPos = Vector3.zero;
         if (BattleData.Instance != null && BattleData.Instance.partyLastPosition != Vector3.zero)
@@ -65,8 +71,7 @@ public class PlayerSpawner : MonoBehaviour
         }
         else
         {
-            GameObject sp = GameObject.Find("SpawnPoint");
-            spawnPos = sp != null ? sp.transform.position : Vector3.zero;
+            spawnPos = spawnPoint != null ? spawnPoint.position : Vector3.zero;
         }
 
         if (GameData.Instance == null || GameData.Instance.selectedRole == null)
@@ -82,8 +87,28 @@ public class PlayerSpawner : MonoBehaviour
 
         CameraFollow cam = Camera.main?.GetComponent<CameraFollow>();
         if (cam != null && leader != null)
+        {
             cam.target = leader.transform;
+            Debug.Log($"Camera target assigned: {leader.name}");
+        }
+        else
+        {
+            Debug.LogError($"Camera null: {cam == null}, leader null: {leader == null}");
+        }
+
+        MinimapFollow minimapFollow = FindFirstObjectByType<MinimapFollow>();
+        if (minimapFollow != null && leader != null)
+        {
+            minimapFollow.target = leader.transform;
+            Debug.Log("Minimap follow target assigned: " + leader.name);
+        }
+        else
+        {
+            Debug.LogError($"MinimapFollow null: {minimapFollow == null}, leader null: {leader == null}");
+        }
+
     }
+
 
     void SpawnAtPosition(Vector3 spawnPos)
     {

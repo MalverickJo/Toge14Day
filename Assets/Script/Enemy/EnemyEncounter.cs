@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyEncounter : MonoBehaviour
 {
@@ -11,12 +12,27 @@ public class EnemyEncounter : MonoBehaviour
     [Header("Random Spawn Area di BattleScene")]
     public bool randomSpawn = true;
 
+    [Header("Boss? (jika ya, menang = ending)")]
+    public bool isBoss = false;
+
+    [HideInInspector] public string enemyId;
+
     private bool triggered = false;
     private GameObject visualInstance;
 
+    private void Awake()
+    {
+        enemyId = $"enemy_{transform.position.x}_{transform.position.y}";
+    }
 
     private void Start()
     {
+        if (DefeatedEnemyTracker.IsDefeated(enemyId))
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         SpawnVisual();
     }
 
@@ -39,40 +55,36 @@ public class EnemyEncounter : MonoBehaviour
     {
         if (triggered) return;
         if (!other.CompareTag("Player")) return;
-        if (BattleData.Instance == null) { Debug.LogError("BattleData null!"); return; }
+        if (BattleData.Instance == null) return;
 
         triggered = true;
+        StartCoroutine(EncounterSequence(other));
+    }
+
+    IEnumerator EncounterSequence(Collider2D other)
+    {
+        PlayerMovement pm = other.GetComponent<PlayerMovement>();
+        if (pm != null) pm.enabled = false;
+
+        yield return new WaitForSeconds(0.3f);
+
         BattleData.Instance.enemies = enemiesInBattle;
         BattleData.Instance.randomSpawn = randomSpawn;
-        BattleData.Instance.defeatedEnemyPosition = transform.position;
+        BattleData.Instance.currentEnemyId = enemyId;
         BattleData.Instance.partyLastPosition = other.transform.position;
 
-        for (int i = 0; i < PlayerSpawner.Instance.partyObjects.Count; i++)
-        {
-            Character c = PlayerSpawner.Instance.partyObjects[i].GetComponent<Character>();
-            Debug.Log($"partyObjects[{i}]: {c?.RoleData?.roleName} | override: {c?.GetOverridePrefab()}");
-        }
+        BattleData.Instance.partyBattleData.Clear();
         for (int i = 0; i < PartyData.Instance.partyMembers.Count; i++)
         {
-            Debug.Log($"partyMembers[{i}]: {PartyData.Instance.partyMembers[i].roleData.roleName}");
-        }
-
-        BattleData.Instance.enemies = enemiesInBattle;
-        BattleData.Instance.randomSpawn = randomSpawn;
-
-        BattleData.Instance.partyBattleData.Clear();
-        foreach (var member in PartyData.Instance.partyMembers)
-        {
+            CharacterRoleData member = PartyData.Instance.partyMembers[i].roleData;
+            GameObject overridePrefab = PartyData.Instance.partyMembers[i].overridePrefab;
             BattleData.Instance.partyBattleData.Add(new PartyMemberBattleData
             {
-                roleData = member.roleData,
-                overridePrefab = member.overridePrefab
+                roleData = member,
+                overridePrefab = overridePrefab
             });
-            Debug.Log($"Battle member: {member.roleData.roleName} | override: {member.overridePrefab}");
         }
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("Battle");
     }
-
-
 }

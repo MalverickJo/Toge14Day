@@ -15,9 +15,13 @@ public class BattleData : MonoBehaviour
     public EnemyData[] enemies;
     public bool randomSpawn = true;
     public List<PartyMemberBattleData> partyBattleData = new List<PartyMemberBattleData>();
-    public GameObject currentEncounter;
+    public string currentEnemyId;
+    public bool isBossBattle = false;
+
+    public Vector3 partyLastPosition;
+    public string defeatedEnemyId = "";
     public Vector3 defeatedEnemyPosition;
-    public Vector3 partyLastPosition; 
+
     private void Awake()
     {
         if (Instance == null)

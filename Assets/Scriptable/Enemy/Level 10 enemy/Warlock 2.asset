@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f24e33b587f445f40946c3a1a3023d06, type: 3}
+  m_Name: Warlock 2
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  role: 2
+  enemyName: Warlock
+  description: 
+  enemyLevel: 10
+  attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
+  deathSound: {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
+  maxHP: 55
+  maxMP: 80
+  attack: 5
+  defense: 5
+  magicAttack: 18
+  magicDefense: 10
+  speed: 85
+  hpGrowth: 6
+  mpGrowth: 8
+  attackGrowth: 0
+  defenseGrowth: 1
+  magicAttackGrowth: 4
+  magicDefenseGrowth: 2
+  speedGrowth: 1
+  skills:
+  - {fileID: 11400000, guid: 47d33aa40fa653a4cbf2dc8395a24798, type: 2}
+  expReward: 100
+  goldReward: 25
+  enemyPrefab: {fileID: 7343181494619758298, guid: 6c78cae001f734c67b1c2cf4d74c89e2,
+    type: 3}

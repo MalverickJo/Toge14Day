@@ -177,6 +177,11 @@ public class Character : MonoBehaviour
         return true;
     }
 
+    public void RegenMP(int amount)
+    {
+        currentMP = Mathf.Min(GetMaxMP(), currentMP + amount);
+    }
+
 
     public void TickEffects()
     {
@@ -244,14 +249,17 @@ public class Character : MonoBehaviour
         visualInstance.transform.localRotation = Quaternion.identity;
 
         Animator[] animators = visualInstance.GetComponentsInChildren<Animator>(true);
+        Debug.Log($"Found {animators.Length} animators in {visualInstance.name}");
         foreach (Animator anim in animators)
         {
+            Debug.Log($"Animator: {anim.name}, controller: {anim.runtimeAnimatorController}");
             if (anim.runtimeAnimatorController != null)
             {
                 animator = anim;
                 break;
             }
         }
+        Debug.Log($"Final animator: {animator}");
     }
 
     public void SetMoveAnimation(bool isMoving)
@@ -264,8 +272,10 @@ public class Character : MonoBehaviour
     {
         if (visualInstance == null) return;
         if (x == 0) return;
-        float rotY = x > 0 ? -180f : 0f;
-        visualInstance.transform.rotation = Quaternion.Euler(0f, rotY, 0f);
+
+        Vector3 scale = visualInstance.transform.localScale;
+        scale.x = x > 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+        visualInstance.transform.localScale = scale;
     }
 
     public void SetAttackAnimation()

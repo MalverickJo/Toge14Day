@@ -25,7 +25,11 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: 59218c78b904cff438d4d933af12a431, type: 2}
   - {fileID: 11400000, guid: 971c4cde56be3d74aa8cb594bea86b81, type: 2}
-  characterPrefab: {fileID: 7715552558439874258, guid: 0f2e860a0377f4a9f98fa39bbafb5dad, type: 3}
+  attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
+  deathSound: {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
+  mpRegenPercent: 0.1
+  characterPrefab: {fileID: 7715552558439874258, guid: 0f2e860a0377f4a9f98fa39bbafb5dad,
+    type: 3}
   animator: {fileID: 9100000, guid: e9358c226bb09e24da9c5f7064768810, type: 2}
   hpGrowth: 15
   mpGrowth: 3

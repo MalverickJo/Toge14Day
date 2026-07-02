@@ -24,6 +24,10 @@ public class EnemyData : ScriptableObject
     [Header("Level")]
     public int enemyLevel = 1;
 
+    [Header("Audio")]
+    public AudioClip attackSound;
+    public AudioClip deathSound;
+
     [Header("Base Stats")]
     public int maxHP;
     public int maxMP;

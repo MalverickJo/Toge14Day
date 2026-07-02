@@ -15,6 +15,7 @@ MonoBehaviour:
   skillName: Meteor
   description: Menjatuhkan meteor besar yang menghantam semua musuh.
   skillType: 0
+  skillSound: {fileID: 8300000, guid: a652877b012108e41871f867ada9f176, type: 3}
   targetType: 3
   manaCost: 35
   attackScaling: 0
@@ -22,6 +23,8 @@ MonoBehaviour:
   effects:
   - effectType: 0
     chanceToApply: 100
-    value: 100
+    value: 70
     duration: 0
-  icon: {fileID: 0}
+    statTarget: 
+  icon: {fileID: 21300000, guid: 300abdf8cbdd5c742a05b6506767fd64, type: 3}
+  cooldown: 3

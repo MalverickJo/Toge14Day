@@ -16,6 +16,8 @@ MonoBehaviour:
   enemyName: Warlock
   description: 
   enemyLevel: 1
+  attackSound: {fileID: 8300000, guid: 323e15cfe809e114ab92c9f4b25e8bc2, type: 3}
+  deathSound: {fileID: 8300000, guid: 566d2ea6240b489479a6e9fd608c2621, type: 3}
   maxHP: 55
   maxMP: 80
   attack: 5
@@ -34,4 +36,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47d33aa40fa653a4cbf2dc8395a24798, type: 2}
   expReward: 100
   goldReward: 25
-  enemyPrefab: {fileID: 7343181494619758298, guid: 6c78cae001f734c67b1c2cf4d74c89e2, type: 3}
+  enemyPrefab: {fileID: 7343181494619758298, guid: 6c78cae001f734c67b1c2cf4d74c89e2,
+    type: 3}

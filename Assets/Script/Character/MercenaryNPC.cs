@@ -43,7 +43,7 @@ public class MercenaryNPC : MonoBehaviour
 
     private void Update()
     {
-        if (playerNearby && Input.GetKeyDown(KeyCode.E))
+        if (playerNearby && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space)))
         {
             if (RecruitUI.Instance == null)
             {

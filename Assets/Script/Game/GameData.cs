@@ -26,6 +26,8 @@ public class GameData : MonoBehaviour
         if (LevelData.Instance != null)
             LevelData.Instance.Reset();
     }
+
+#if UNITY_EDITOR
     private void OnApplicationQuit()
     {
         if (selectedRole != null)
@@ -34,4 +36,5 @@ public class GameData : MonoBehaviour
             UnityEditor.AssetDatabase.SaveAssets();
         }
     }
+#endif
 }

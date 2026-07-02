@@ -32,8 +32,10 @@ public class BattleManager : MonoBehaviour
         Character.worldHPBarPrefab = worldHPBarPrefab;
         Enemy.worldHPBarPrefab = worldHPBarPrefab;
     }
+
     private void Start()
     {
+        AudioManager.Instance?.PlayBattleMusic();
         StartCoroutine(SetupBattle());
     }
 
@@ -104,6 +106,25 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    // ─── MP Regen ──────────────────────────────────────
+
+    void RegenAllPartyMP()
+    {
+        foreach (var unit in allUnits)
+        {
+            if (!unit.isEnemy && !unit.isDead && unit.characterRef != null)
+            {
+                float percent = unit.characterRef.RoleData.mpRegenPercent;
+                if (percent > 0)
+                    unit.RegenMPPercent(percent);
+            }
+            else if (unit.isEnemy && !unit.isDead && unit.enemyRef != null)
+            {
+                unit.RegenMPPercent(0.1f);
+            }
+        }
+    }
+
     // ─── Player Actions ────────────────────────────────
 
     public void PlayerAttack(BattleUnit target)
@@ -114,6 +135,7 @@ public class BattleManager : MonoBehaviour
         target.TakeDamage(damage);
 
         currentUnit.characterRef?.SetAttackAnimation();
+        AudioManager.Instance?.PlaySFX(currentUnit.characterRef?.RoleData?.attackSound);
         battleUI.ShowDamageText(target.gameObject, damage);
         battleUI.UpdateAllHPBars(allUnits);
 
@@ -126,6 +148,14 @@ public class BattleManager : MonoBehaviour
     {
         if (state != BattleState.PlayerTurn) return;
 
+        if (!currentUnit.cooldownTracker.IsReady(skill))
+        {
+            int remaining = currentUnit.cooldownTracker.GetCooldown(skill);
+            battleUI.ShowMessage($"Skill cooldown! {remaining} turn lagi");
+            battleUI.ShowPlayerActions(currentUnit);
+            return;
+        }
+
         if (currentUnit.currentMP < skill.manaCost)
         {
             battleUI.ShowMessage("Out of Mana!");
@@ -135,6 +165,9 @@ public class BattleManager : MonoBehaviour
 
         currentUnit.currentMP -= skill.manaCost;
         currentUnit.characterRef?.SpendMP(skill.manaCost);
+        currentUnit.cooldownTracker.UseSkill(skill);
+
+        AudioManager.Instance?.PlaySFX(skill.skillSound);
 
         int damage = Mathf.RoundToInt(
             (currentUnit.attack * skill.attackScaling) +
@@ -173,8 +206,8 @@ public class BattleManager : MonoBehaviour
     List<BattleUnit> GetSkillTargets(BattleUnit mainTarget, TargetType type)
     {
         List<BattleUnit> targets = new List<BattleUnit>();
-        List<BattleUnit> enemies = allUnits.FindAll(u => u.isEnemy && !u.isDead);
-        List<BattleUnit> allies = allUnits.FindAll(u => !u.isEnemy && !u.isDead);
+        List<BattleUnit> foes = allUnits.FindAll(u => u.isEnemy != currentUnit.isEnemy && !u.isDead);
+        List<BattleUnit> friends = allUnits.FindAll(u => u.isEnemy == currentUnit.isEnemy && !u.isDead);
 
         switch (type)
         {
@@ -186,8 +219,8 @@ public class BattleManager : MonoBehaviour
                 if (mainTarget != null)
                 {
                     targets.Add(mainTarget);
-                    int idx = enemies.IndexOf(mainTarget);
-                    if (idx + 1 < enemies.Count) targets.Add(enemies[idx + 1]);
+                    int idx = foes.IndexOf(mainTarget);
+                    if (idx >= 0 && idx + 1 < foes.Count) targets.Add(foes[idx + 1]);
                 }
                 break;
 
@@ -195,14 +228,14 @@ public class BattleManager : MonoBehaviour
                 if (mainTarget != null)
                 {
                     targets.Add(mainTarget);
-                    int idx2 = enemies.IndexOf(mainTarget);
-                    if (idx2 + 1 < enemies.Count) targets.Add(enemies[idx2 + 1]);
-                    if (idx2 + 2 < enemies.Count) targets.Add(enemies[idx2 + 2]);
+                    int idx2 = foes.IndexOf(mainTarget);
+                    if (idx2 >= 0 && idx2 + 1 < foes.Count) targets.Add(foes[idx2 + 1]);
+                    if (idx2 >= 0 && idx2 + 2 < foes.Count) targets.Add(foes[idx2 + 2]);
                 }
                 break;
 
             case TargetType.AllEnemies:
-                targets.AddRange(enemies);
+                targets.AddRange(foes);
                 break;
 
             case TargetType.Self:
@@ -210,7 +243,7 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case TargetType.AllAllies:
-                targets.AddRange(allies);
+                targets.AddRange(friends);
                 break;
         }
         return targets;
@@ -222,7 +255,12 @@ public class BattleManager : MonoBehaviour
 
         CheckBattleEnd();
         if (state == BattleState.Win || state == BattleState.Lose) yield break;
+
         currentUnit.characterRef?.TickEffects();
+        currentUnit.cooldownTracker.TickCooldowns();
+
+        RegenAllPartyMP();
+        battleUI.UpdateAllHPBars(allUnits);
 
         turnIndex = (turnIndex + 1) % turnOrder.Count;
         NextTurn();
@@ -240,8 +278,14 @@ public class BattleManager : MonoBehaviour
             target = aliveAllies[Random.Range(0, aliveAllies.Count)];
 
         SkillData skill = currentUnit.enemyRef?.GetRandomSkill();
+
         if (skill != null && Random.value > 0.4f)
         {
+            currentUnit.currentMP -= skill.manaCost;
+            currentUnit.enemyRef?.SpendMP(skill.manaCost);
+
+            AudioManager.Instance?.PlaySFX(skill.skillSound);
+
             List<BattleUnit> targets = GetSkillTargets(target, skill.targetType);
             int damage = Mathf.RoundToInt(
                 (currentUnit.attack * skill.attackScaling) +
@@ -249,13 +293,19 @@ public class BattleManager : MonoBehaviour
             );
             foreach (var t in targets)
             {
-                t.TakeDamage(damage);
+                if (skill.skillType == SkillType.Heal)
+                    t.Heal(damage);
+                else
+                    t.TakeDamage(damage);
+
                 battleUI.ShowDamageText(t.gameObject, damage);
                 CameraShake.Instance?.Shake(0.15f, 0.08f);
             }
         }
         else
         {
+            AudioManager.Instance?.PlaySFX(currentUnit.enemyRef?.RoleData?.attackSound);
+
             int damage = Mathf.RoundToInt(currentUnit.attack * 1.0f);
             target.TakeDamage(damage);
             battleUI.ShowDamageText(target.gameObject, damage);
@@ -268,6 +318,9 @@ public class BattleManager : MonoBehaviour
         currentUnit.enemyRef?.TickEffects();
         CheckBattleEnd();
         if (state == BattleState.Win || state == BattleState.Lose) yield break;
+
+        RegenAllPartyMP();
+        battleUI.UpdateAllHPBars(allUnits);
 
         turnIndex = (turnIndex + 1) % turnOrder.Count;
         NextTurn();
@@ -310,13 +363,21 @@ public class BattleManager : MonoBehaviour
         LevelData.Instance?.AddEXP(totalEXP);
         PartyData.Instance.gold += totalGold;
 
+        if (!string.IsNullOrEmpty(BattleData.Instance.currentEnemyId))
+            DefeatedEnemyTracker.MarkDefeated(BattleData.Instance.currentEnemyId);
+
         yield return new WaitForSeconds(2f);
 
         PortraitCamera[] cameras = FindObjectsByType<PortraitCamera>(FindObjectsSortMode.None);
         foreach (var pc in cameras)
             Destroy(pc.gameObject);
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+        AudioManager.Instance?.PlayOverworldMusic();
+
+        if (BattleData.Instance.isBossBattle)
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Ending");
+        else
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
     }
 
     IEnumerator BattleLose()
@@ -331,7 +392,14 @@ public class BattleManager : MonoBehaviour
         if (unit.gameObject != null)
         {
             if (unit.characterRef != null)
+            {
                 unit.characterRef.SetDeathAnimation();
+                AudioManager.Instance?.PlaySFX(unit.characterRef.RoleData?.deathSound);
+            }
+            if (unit.enemyRef != null)
+            {
+                AudioManager.Instance?.PlaySFX(unit.enemyRef.RoleData?.deathSound);
+            }
             StartCoroutine(DestroyAfterDelay(unit.gameObject, 1f));
         }
 
@@ -342,7 +410,6 @@ public class BattleManager : MonoBehaviour
             CharacterRoleData deadRole = unit.characterRef.RoleData;
             GameObject deadOverride = unit.characterRef.GetOverridePrefab();
             PartyData.Instance.RemoveMember(deadRole, deadOverride);
-            Debug.Log($"{deadRole.roleName} mati dan dihapus dari party!");
         }
     }
 

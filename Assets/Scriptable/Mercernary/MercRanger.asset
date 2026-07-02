@@ -15,5 +15,6 @@ MonoBehaviour:
   mercenaryName: E'Lune (Dark Elf Ranger)
   recruitDialog: 'What do you want ? Im E''Lune. Not scared ? I am the Dark Elf '
   role: {fileID: 11400000, guid: 1a9be46c338a5334c928c856a2f0a089, type: 2}
-  overworldPrefab: {fileID: 9158167135536924216, guid: 24f9789f962964a0ea5c4fbedc52161a, type: 3}
-  hireCost: 200
+  overworldPrefab: {fileID: 9158167135536924216, guid: 24f9789f962964a0ea5c4fbedc52161a,
+    type: 3}
+  hireCost: 300

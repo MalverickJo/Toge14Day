@@ -14,6 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: b024d81b1a6eaa44c92d4e750457e2f8
-  m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  - enabled: 1
+    path: Assets/Scenes/Ending.unity
+    guid: 971bf86f8113c624caff86d02bbf704f
+  m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
