@@ -45,7 +45,8 @@ public class PartyData : MonoBehaviour
     public void Reset()
     {
         partyMembers.Clear();
-        gold = 500;
+        gold = 200;
+        recruitedNPCNames.Clear();
     }
 
     public bool AddMember(CharacterRoleData role, GameObject overridePrefab = null)

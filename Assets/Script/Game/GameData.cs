@@ -25,6 +25,16 @@ public class GameData : MonoBehaviour
             PartyData.Instance.Reset();
         if (LevelData.Instance != null)
             LevelData.Instance.Reset();
+        if (BattleData.Instance != null)
+        {
+            BattleData.Instance.partyLastPosition = Vector3.zero;
+            BattleData.Instance.defeatedEnemyPosition = Vector3.zero;
+            BattleData.Instance.currentEnemyId = "";
+            BattleData.Instance.defeatedEnemyId = "";
+            BattleData.Instance.isBossBattle = false;
+            BattleData.Instance.partyBattleData.Clear();
+        }
+        DefeatedEnemyTracker.ClearAll();
     }
 
 #if UNITY_EDITOR

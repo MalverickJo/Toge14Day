@@ -374,13 +374,6 @@ public class BattleManager : MonoBehaviour
 
         AudioManager.Instance?.PlayOverworldMusic();
 
-        foreach (var unit in allUnits)
-            if (unit.gameObject != null)
-                unit.gameObject.SetActive(false);
-
-        if (FadeEffect.Instance != null)
-            yield return StartCoroutine(FadeEffect.Instance.FadeOut());
-
         if (BattleData.Instance.isBossBattle)
             UnityEngine.SceneManagement.SceneManager.LoadScene("Ending");
         else
@@ -398,6 +391,19 @@ public class BattleManager : MonoBehaviour
 
         if (FadeEffect.Instance != null)
             yield return StartCoroutine(FadeEffect.Instance.FadeOut());
+
+        if (BattleData.Instance != null)
+        {
+            BattleData.Instance.partyLastPosition = Vector3.zero;
+            BattleData.Instance.defeatedEnemyPosition = Vector3.zero;
+            BattleData.Instance.currentEnemyId = "";
+            BattleData.Instance.isBossBattle = false;
+            BattleData.Instance.partyBattleData.Clear();
+        }
+        if (LevelData.Instance != null) LevelData.Instance.Reset();
+        if (PartyData.Instance != null) PartyData.Instance.Reset();
+        DefeatedEnemyTracker.ClearAll();
+        IntroCutScene.ResetCutscene();
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("Start");
     }

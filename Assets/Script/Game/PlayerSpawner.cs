@@ -37,8 +37,11 @@ public class PlayerSpawner : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name != "Game") return;
-
+        
         AudioManager.Instance?.PlayOverworldMusic();
+
+        GameObject spawnObj = GameObject.Find("SpawnLocation");
+        if (spawnObj != null) spawnPoint = spawnObj.transform;
 
         Debug.Log($"OnSceneLoaded - Game scene");
         Debug.Log($"PartyData count: {PartyData.Instance?.partyMembers?.Count}");
@@ -68,6 +71,8 @@ public class PlayerSpawner : MonoBehaviour
         {
             spawnPos = BattleData.Instance.partyLastPosition;
             BattleData.Instance.partyLastPosition = Vector3.zero;
+            Debug.Log($"partyLastPosition: {BattleData.Instance.partyLastPosition}");
+            Debug.Log($"spawnPoint: {spawnPoint?.position}");
         }
         else
         {

@@ -13,6 +13,19 @@ public class StartMenuManager : MonoBehaviour
 
     public void OnStartButton()
     {
+        if (LevelData.Instance != null) LevelData.Instance.Reset();
+        if (PartyData.Instance != null) PartyData.Instance.Reset();
+        if (BattleData.Instance != null)
+        {
+            BattleData.Instance.partyLastPosition = Vector3.zero;
+            BattleData.Instance.defeatedEnemyPosition = Vector3.zero;
+            BattleData.Instance.currentEnemyId = "";
+            BattleData.Instance.defeatedEnemyId = "";
+            BattleData.Instance.isBossBattle = false;
+            BattleData.Instance.partyBattleData.Clear();
+        }
+        DefeatedEnemyTracker.ClearAll();
+        IntroCutScene.ResetCutscene();
         startMenuPanel.SetActive(false);
         characterSelectPanel.SetActive(true);
     }
