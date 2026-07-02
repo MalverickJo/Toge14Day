@@ -5,6 +5,7 @@ using TMPro;
 public class LevelUI : MonoBehaviour
 {
     public TextMeshProUGUI levelText;
+    public TextMeshProUGUI goldText;
 
     private void Update()
     {
@@ -12,6 +13,9 @@ public class LevelUI : MonoBehaviour
 
         int level = LevelData.Instance.partyLevel;
         levelText.text = $"Level {level}";
+
+        if (goldText != null && PartyData.Instance != null)
+            goldText.text = $"Gold: {PartyData.Instance.gold}";
     }
 }
 

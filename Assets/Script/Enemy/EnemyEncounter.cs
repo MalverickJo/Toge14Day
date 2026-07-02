@@ -66,7 +66,13 @@ public class EnemyEncounter : MonoBehaviour
         PlayerMovement pm = other.GetComponent<PlayerMovement>();
         if (pm != null) pm.enabled = false;
 
-        yield return new WaitForSeconds(0.3f);
+        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.linearVelocity = Vector2.zero;
+
+        if (FadeEffect.Instance != null)
+            yield return StartCoroutine(FadeEffect.Instance.FadeOut());
+        else
+            yield return new WaitForSeconds(0.3f);
 
         BattleData.Instance.enemies = enemiesInBattle;
         BattleData.Instance.randomSpawn = randomSpawn;

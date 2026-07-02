@@ -42,7 +42,11 @@ public class BattleManager : MonoBehaviour
     IEnumerator SetupBattle()
     {
         state = BattleState.Start;
-        yield return new WaitForSeconds(0.5f);
+
+        if (FadeEffect.Instance != null)
+            yield return StartCoroutine(FadeEffect.Instance.FadeIn());
+        else
+            yield return new WaitForSeconds(0.5f);
 
         if (spawner == null) { Debug.LogError("spawner null!"); yield break; }
         if (battleUI == null) { Debug.LogError("battleUI null!"); yield break; }
@@ -374,6 +378,9 @@ public class BattleManager : MonoBehaviour
 
         AudioManager.Instance?.PlayOverworldMusic();
 
+        if (FadeEffect.Instance != null)
+            yield return StartCoroutine(FadeEffect.Instance.FadeOut());
+
         if (BattleData.Instance.isBossBattle)
             UnityEngine.SceneManagement.SceneManager.LoadScene("Ending");
         else
@@ -395,27 +402,27 @@ public class BattleManager : MonoBehaviour
             {
                 unit.characterRef.SetDeathAnimation();
                 AudioManager.Instance?.PlaySFX(unit.characterRef.RoleData?.deathSound);
+                if (unit.enemyRef != null)
+                {
+                    AudioManager.Instance?.PlaySFX(unit.enemyRef.RoleData?.deathSound);
+                }
+                StartCoroutine(DestroyAfterDelay(unit.gameObject, 1f));
             }
-            if (unit.enemyRef != null)
+
+            battleUI.RemoveUnitPanel(unit);
+
+            if (!unit.isEnemy && unit.characterRef != null)
             {
-                AudioManager.Instance?.PlaySFX(unit.enemyRef.RoleData?.deathSound);
+                CharacterRoleData deadRole = unit.characterRef.RoleData;
+                GameObject deadOverride = unit.characterRef.GetOverridePrefab();
+                PartyData.Instance.RemoveMember(deadRole, deadOverride);
             }
-            StartCoroutine(DestroyAfterDelay(unit.gameObject, 1f));
         }
 
-        battleUI.RemoveUnitPanel(unit);
-
-        if (!unit.isEnemy && unit.characterRef != null)
+        IEnumerator DestroyAfterDelay(GameObject obj, float delay)
         {
-            CharacterRoleData deadRole = unit.characterRef.RoleData;
-            GameObject deadOverride = unit.characterRef.GetOverridePrefab();
-            PartyData.Instance.RemoveMember(deadRole, deadOverride);
+            yield return new WaitForSeconds(delay);
+            if (obj != null) Destroy(obj);
         }
-    }
-
-    IEnumerator DestroyAfterDelay(GameObject obj, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (obj != null) Destroy(obj);
     }
 }
