@@ -42,11 +42,7 @@ public class BattleManager : MonoBehaviour
     IEnumerator SetupBattle()
     {
         state = BattleState.Start;
-
-        if (FadeEffect.Instance != null)
-            yield return StartCoroutine(FadeEffect.Instance.FadeIn());
-        else
-            yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
         if (spawner == null) { Debug.LogError("spawner null!"); yield break; }
         if (battleUI == null) { Debug.LogError("battleUI null!"); yield break; }
@@ -367,8 +363,8 @@ public class BattleManager : MonoBehaviour
         LevelData.Instance?.AddEXP(totalEXP);
         PartyData.Instance.gold += totalGold;
 
-        if (!string.IsNullOrEmpty(BattleData.Instance.currentEnemyId))
-            DefeatedEnemyTracker.MarkDefeated(BattleData.Instance.currentEnemyId);
+        if (!string.IsNullOrEmpty(BattleData.Instance.defeatedEnemyId))
+            DefeatedEnemyTracker.MarkDefeated(BattleData.Instance.defeatedEnemyId);
 
         yield return new WaitForSeconds(2f);
 
@@ -377,6 +373,10 @@ public class BattleManager : MonoBehaviour
             Destroy(pc.gameObject);
 
         AudioManager.Instance?.PlayOverworldMusic();
+
+        foreach (var unit in allUnits)
+            if (unit.gameObject != null)
+                unit.gameObject.SetActive(false);
 
         if (FadeEffect.Instance != null)
             yield return StartCoroutine(FadeEffect.Instance.FadeOut());
@@ -391,6 +391,14 @@ public class BattleManager : MonoBehaviour
     {
         battleUI.ShowLosePanel();
         yield return new WaitForSeconds(2f);
+
+        foreach (var unit in allUnits)
+            if (unit.gameObject != null)
+                unit.gameObject.SetActive(false);
+
+        if (FadeEffect.Instance != null)
+            yield return StartCoroutine(FadeEffect.Instance.FadeOut());
+
         UnityEngine.SceneManagement.SceneManager.LoadScene("Start");
     }
 
@@ -402,27 +410,27 @@ public class BattleManager : MonoBehaviour
             {
                 unit.characterRef.SetDeathAnimation();
                 AudioManager.Instance?.PlaySFX(unit.characterRef.RoleData?.deathSound);
-                if (unit.enemyRef != null)
-                {
-                    AudioManager.Instance?.PlaySFX(unit.enemyRef.RoleData?.deathSound);
-                }
-                StartCoroutine(DestroyAfterDelay(unit.gameObject, 1f));
             }
-
-            battleUI.RemoveUnitPanel(unit);
-
-            if (!unit.isEnemy && unit.characterRef != null)
+            if (unit.enemyRef != null)
             {
-                CharacterRoleData deadRole = unit.characterRef.RoleData;
-                GameObject deadOverride = unit.characterRef.GetOverridePrefab();
-                PartyData.Instance.RemoveMember(deadRole, deadOverride);
+                AudioManager.Instance?.PlaySFX(unit.enemyRef.RoleData?.deathSound);
             }
+            StartCoroutine(DestroyAfterDelay(unit.gameObject, 1f));
         }
 
-        IEnumerator DestroyAfterDelay(GameObject obj, float delay)
+        battleUI.RemoveUnitPanel(unit);
+
+        if (!unit.isEnemy && unit.characterRef != null)
         {
-            yield return new WaitForSeconds(delay);
-            if (obj != null) Destroy(obj);
+            CharacterRoleData deadRole = unit.characterRef.RoleData;
+            GameObject deadOverride = unit.characterRef.GetOverridePrefab();
+            PartyData.Instance.RemoveMember(deadRole, deadOverride);
         }
+    }
+
+    IEnumerator DestroyAfterDelay(GameObject obj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (obj != null) Destroy(obj);
     }
 }

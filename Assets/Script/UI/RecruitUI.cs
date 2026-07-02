@@ -62,6 +62,11 @@ public class RecruitUI : MonoBehaviour
         {
             PartyData.Instance.AddMember(currentData.role, currentData.overworldPrefab);
             spawner.SpawnPartyMember(currentData.role, currentData.overworldPrefab);
+
+            GameObject newMember = spawner.partyObjects[spawner.partyObjects.Count - 1];
+            Character character = newMember?.GetComponent<Character>();
+            if (character != null && LevelData.Instance != null)
+                character.SetLevel(LevelData.Instance.partyLevel);
             onRecruitSuccess?.Invoke();
             Hide();
         }

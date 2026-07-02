@@ -14,8 +14,8 @@ public class LevelUI : MonoBehaviour
         int level = LevelData.Instance.partyLevel;
         levelText.text = $"Level {level}";
 
-        if (goldText != null && PartyData.Instance != null)
-            goldText.text = $"Gold: {PartyData.Instance.gold}";
+        if (goldText != null)
+            goldText.text = $"Gold: {(PartyData.Instance != null ? PartyData.Instance.gold : 0)}";
     }
 }
 
