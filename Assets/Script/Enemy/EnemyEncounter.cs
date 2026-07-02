@@ -77,6 +77,7 @@ public class EnemyEncounter : MonoBehaviour
         BattleData.Instance.enemies = enemiesInBattle;
         BattleData.Instance.randomSpawn = randomSpawn;
         BattleData.Instance.currentEnemyId = enemyId;
+        BattleData.Instance.isBossBattle = isBoss;
         BattleData.Instance.partyLastPosition = other.transform.position;
 
         BattleData.Instance.partyBattleData.Clear();

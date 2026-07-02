@@ -375,7 +375,11 @@ public class BattleManager : MonoBehaviour
         AudioManager.Instance?.PlayOverworldMusic();
 
         if (BattleData.Instance.isBossBattle)
+        {
+            AudioManager.Instance?.StopMusic();
             UnityEngine.SceneManagement.SceneManager.LoadScene("Ending");
+        }
+           
         else
             UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
     }
@@ -402,6 +406,7 @@ public class BattleManager : MonoBehaviour
         }
         if (LevelData.Instance != null) LevelData.Instance.Reset();
         if (PartyData.Instance != null) PartyData.Instance.Reset();
+        AudioManager.Instance?.StopMusic();
         DefeatedEnemyTracker.ClearAll();
         IntroCutScene.ResetCutscene();
 
