@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e4e9f0b9ff742345a931ce210ef0946, type: 3}
   m_Name: MercRanger
   m_EditorClassIdentifier: Assembly-CSharp::MercenaryData
-  mercenaryName: E'Lune (Dark Elf Ranger)
+  mercenaryName: E'Lune (Dark Ranger)
   recruitDialog: 'What do you want ? Im E''Lune. Not scared ? I am the Dark Elf '
   role: {fileID: 11400000, guid: 1a9be46c338a5334c928c856a2f0a089, type: 2}
   overworldPrefab: {fileID: 9158167135536924216, guid: 24f9789f962964a0ea5c4fbedc52161a,
