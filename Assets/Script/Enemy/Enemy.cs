@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour
     public static GameObject worldHPBarPrefab;
     private HPBar worldHPBar;
 
+    private SpriteRenderer[] cachedRenderers;
+    private Color[] originalColors;
+
     public void SpawnWorldHPBar()
     {
         if (worldHPBarPrefab == null) return;
@@ -122,8 +125,32 @@ public class Enemy : MonoBehaviour
     {
         if (this == null || gameObject == null) return;
 
-        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
-        foreach (var sr in renderers)
-            sr.color = active ? new Color(1f, 0.5f, 0.5f, 1f) : Color.white;
+        if (cachedRenderers == null)
+        {
+            cachedRenderers = GetComponentsInChildren<SpriteRenderer>();
+            originalColors = new Color[cachedRenderers.Length];
+            for (int i = 0; i < cachedRenderers.Length; i++)
+                originalColors[i] = cachedRenderers[i].color;
+        }
+
+        for (int i = 0; i < cachedRenderers.Length; i++)
+        {
+            if (cachedRenderers[i] == null) continue;
+
+            if (active)
+            {
+                Color baseColor = originalColors[i];
+                cachedRenderers[i].color = new Color(
+                    baseColor.r,
+                    baseColor.g * 0.6f,
+                    baseColor.b * 0.6f,
+                    baseColor.a
+                );
+            }
+            else
+            {
+                cachedRenderers[i].color = originalColors[i];
+            }
+        }
     }
 }
